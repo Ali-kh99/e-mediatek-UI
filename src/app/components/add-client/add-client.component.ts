@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../Client';
-import { ClientService } from '../client.service';
+import { Client } from '../../model/client';
+import { ClientService } from '../../service/client.service';
 
 @Component({
   selector: 'app-add-client',
@@ -9,7 +9,7 @@ import { ClientService } from '../client.service';
 })
 export class AddClientComponent implements OnInit {
 
-  client: Client = new Client("", "", "", "", 0, "");
+  client: Client = new Client();
 
   constructor(private clientService: ClientService) { }
 

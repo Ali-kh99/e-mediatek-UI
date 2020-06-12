@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<div class="row mt">
+	<div class="col-lg-12">
+
+		<div class="form-panel">
+			<h4>
+				<i class="fa fa-angle-right"></i>
+				Crée une Facture</h4>
+			<hr>
+			<div class=" form">
+				<form class="cmxform form-horizontal style-form" (ngSubmit)="save()" id="commentForm" method="get" action="">
+
+					<h3>Le Client</h3>
+					<!--<select class="form-control">
+						<option value="client.code" *ngFor="let clt of clients">
+						</option>
+					</select>
+					-->
+					<mat-form-field>
+						<mat-label>Client</mat-label>
+						<mat-select [(value)]="client.code" >
+							<mat-option>None</mat-option>
+							<mat-option *ngFor="let clt of clients" [value]="clt?.code">{{ clt?.code + ' (' + clt?.nom + ' ' + ctl?.prenom +')' }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					
+					
+					<h3>Les produits</h3>
+					<mat-form-field>
+						<mat-label>Produits</mat-label>
+						<mat-select [(value)]="prods" multiple>
+							<mat-option *ngFor="let prod of produits; let i = index"  [value]="prod?.designation">{{ prod?.designation }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					
+
+
+					<div *ngFor="let pro of prods " class="form-group ">
+						<label for="cname" class="control-label col-lg-2">Quantité achetée (required)</label>
+						<div class="col-lg-10">
+							<label> {{pro}} </label>
+							<input [(ngModel)]="produit.prix" class=" form-control" name="prix" minlength="2" type="text" required/>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button class="btn btn-theme" type="submit">Enregister</button>
+							<button class="btn btn-theme04" type="button">Annuler</button>
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+		<!-- /form-panel -->
+	</div>
+	<!-- /col-lg-12 -->
+</div>

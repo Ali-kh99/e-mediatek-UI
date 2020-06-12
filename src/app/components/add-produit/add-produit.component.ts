@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProduitService } from '../produit.service';
-import { Produit } from '../produit';
+import { ProduitService } from '../../service/produit.service';
+import { Produit } from '../../model/produit';
 
 @Component({
   selector: 'app-add-produit',
@@ -9,7 +9,7 @@ import { Produit } from '../produit';
 })
 export class AddProduitComponent implements OnInit {
 
-  produit: Produit = new Produit("", "", "", "")
+  produit: Produit = new Produit();
   constructor(private produitService: ProduitService) { }
 
   ngOnInit() {

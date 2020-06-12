@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Client } from '../Client';
-import { ClientService } from '../client.service';
+import { Client } from '../../model/client';
+import { ClientService } from '../../service/client.service';
 
 @Component({
   selector: 'app-afficher-client',
