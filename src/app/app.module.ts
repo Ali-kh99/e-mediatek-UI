@@ -11,27 +11,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClientService } from './service/client.service';
 import { ProduitService } from './service/produit.service';
-import { EditerClientComponent } from './components/editer-client/editer-client.component';
-import { AddClientComponent } from './components/add-client/add-client.component';
-import { AddProduitComponent } from './components/add-produit/add-produit.component';
-import { EditerProduitComponent } from './components/editer-produit/editer-produit.component';
-import { AfficherClientComponent } from './components/afficher-client/afficher-client.component';
-import { AfficherProduitComponent } from './components/afficher-produit/afficher-produit.component';
 import { FactureService } from './service/facture.service';
-import { CreateFactureComponent } from './components/create-facture/create-facture.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { ClientComponent } from './components/client/client/client.component';
+import { HomeComponent } from './components/home/home.component';
+import { FactureComponent } from './components/facture/facture.component';
+import { ProduitComponent } from './components/produit/produit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditerClientComponent,
-    AddClientComponent,
-    AddProduitComponent,
-    EditerProduitComponent,
-    AfficherClientComponent,
-    AfficherProduitComponent,
-    CreateFactureComponent,
+    ClientComponent,
+    HomeComponent,
+    FactureComponent,
+    ProduitComponent,
 
   ],
   imports: [

@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Client } from '../model/client';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ClientService {
+    private _client:Client;
+    private  _clients:Array<Client>;
     constructor(private http: HttpClient) { }
 
-    public saveClient(client) {
-        this.http.post(`http://localhost:8080/e-mediatek/client/`, client).subscribe(err => {
-            console.log(err);
-        });
+    public save() {
+        this.http.post(`http://localhost:8080/e-mediatek/client/`, this.client).subscribe(
+            data => {
+                console.log(data);
+                if (data > 0) {
+                  this.clients.push(this.cloneClient(this.client));
+                  this.client = null;
+                }
+              }, eror => {
+                console.log('eror');
+              });
     }
 
-    public update(client) {
-        this.http.put(`http://localhost:8080/e-mediatek/client/`, client).subscribe(err => {
+    public update() {
+        this.http.put(`http://localhost:8080/e-mediatek/client/`, this.client).subscribe(err => {
             console.log(err);
         });
     }
@@ -24,12 +34,11 @@ export class ClientService {
     }
 
     public findAll() {
-        this.http.get(`http://localhost:8080/e-mediatek/client/`).subscribe(data => {
-            return data;
-            console.log(data);
-        }, err => {
-            console.log(err);
-        });
+        this.http.get<Array<Client>>(`http://localhost:8080/e-mediatek/client/`).subscribe( 
+            data => {
+                this.clients = data;
+              },
+        );
     }
 
     public findByCode(code: string) {
@@ -67,4 +76,38 @@ export class ClientService {
             return err;
         });
     }
+
+    
+      get client(): Client {
+        if (this._client == null){
+          this._client = new Client();
+        }
+        return this._client;
+      }
+    
+      set client(value: Client) {
+        this._client = value;
+      }
+
+      get clients(): Array<Client> {
+        if (this._clients == null){
+          this._clients = new Array<Client>();
+        }
+        return this._clients;
+      }
+    
+      set clients(value: Array<Client>) {
+        this._clients = value;
+      }
+      private cloneClient(client: Client) {
+        const monClient = new Client();
+        monClient.adresse=client.adresse;
+        monClient.code=client.code;
+        monClient.email=client.email;
+        monClient.nom=client.nom;
+        monClient.prenom=client.prenom;
+        monClient.tel=client.tel;
+        return monClient;
+      }
+    
 } 

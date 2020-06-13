@@ -1,3 +1,5 @@
+import { Facture } from './facture';
+
 export class Client {
     public code: string;
     public nom: string;
@@ -5,7 +7,7 @@ export class Client {
     public adresse: string;
     public tel: number;
     public email: string;
-
+    public factures :Array<Facture>;
     constructor() {}
 
 }

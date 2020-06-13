@@ -1,19 +1,91 @@
-<div style="text-align: center;">
-	<h1>
-		FORM
-		{{title}}!
-	</h1>
-</div>
+<section id="container">
+
+    <header class="header black-bg">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+        </div>
+        <!--logo start-->
+        <a routerLink="/" class="logo"><b>Emadia<span>tek</span></b></a>
+        <!--logo end-->
+
+        <div class="top-menu">
+            <ul class="nav pull-right top-menu">
+                <li>
+                    <a class="logout" href="login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <aside>
+        <div id="sidebar" class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu" id="nav-accordion">
+                <p class="centered">
+                    <img src="../assets/img/ui-sam.jpg" class="img-circle" width="80">
+                </p>
+                <h5 class="centered">Emadiatek</h5>
+                <li class="sub-menu">
+                    <a class="active" href="javascript:;">
+                        <i class="fa fa-desktop"></i>
+                        <span>General</span>
+                    </a>
+                    <ul class="sub">
+                        <li class="active"><a routerLink="/">Produits</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-cogs"></i>
+                        <span>Components</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a routerLink="/facture">Factures</a></li>
+                        <li><a routerLink="/client">Client</a></li>
+                        <li><a routerLink="/produit">Produit</a></li>
+                    </ul>
+                </li>
 
 
-<button mat-button>Hello</button>
+                <li>
+                    <a href="inbox.html">
+                        <i class="fa fa-envelope"></i>
+                        <span>Mail </span>
+                        <span class="label label-theme pull-right mail-info">2</span>
+                    </a>
+                </li>
 
-<app-afficher-client></app-afficher-client>
 
-<app-add-client></app-add-client>
+                <li>
+                    <a href="google_maps.html">
+                        <i class="fa fa-map-marker"></i>
+                        <span>Google Maps </span>
+                    </a>
+                </li>
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
 
-<app-afficher-produit></app-afficher-produit>
+    <router-outlet></router-outlet>
 
-<app-add-produit></app-add-produit>
-
-<app-create-facture></app-create-facture>
+    <footer class="site-footer">
+        <div class="text-center">
+            <p>
+                &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
+            </p>
+            <div class="credits">
+                <!--
+            You are NOT allowed to delete the credit link to TemplateMag with free version.
+            You can delete the credit link only if you bought the pro version.
+            Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
+            Licensing information: https://templatemag.com/license/
+          -->
+                Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
+            </div>
+            <a href="panels.html#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+</section>

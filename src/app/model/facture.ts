@@ -5,7 +5,7 @@ export class Facture {
     public numFacture: string;
     public client: Client;
     public dateFacturation: Date;
-    public ligneFacture = new Array<LigneFacture>();
+    public ligneFactures = new Array<LigneFacture>();
    
     constructor(){}
 }

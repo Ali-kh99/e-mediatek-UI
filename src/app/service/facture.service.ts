@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Facture } from '../model/facture';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FactureService {
+    private _facture:Facture;
+    private  _Factures:Array<Facture>;
     constructor(private http: HttpClient) { }
 
-    public saveFacture(facture) {
-        this.http.post(`http://localhost:8080/e-mediatek/facture/`, facture).subscribe(err => {
-            console.log(err);
-        });
+    public saveFacture() {
+        this.http.post(`http://localhost:8080/e-mediatek/facture/`, this.facture).subscribe(
+            data => {
+                if (data > 0) {
+                  this.factures.push(this.cloneFacture(this.facture));
+                  this.facture = null;
+                }
+              }, eror => {
+                console.log('eror');
+              });
     }
 
     public delete(id: number) {
@@ -18,12 +27,11 @@ export class FactureService {
     }
 
     public findAll() {
-        this.http.get(`http://localhost:8080/e-mediatek/facture/`).subscribe(data => {
-            return data;
-        }, err => {
-            console.log(err);
-            return err;
-        });
+        this.http.get<Array<Facture>>(`http://localhost:8080/e-mediatek/facture/`).subscribe(
+            data => {
+               this.factures = data;
+              },
+        );
     }
 
     public findByNumeroFacture(numeroFacture: string) {
@@ -43,4 +51,34 @@ export class FactureService {
             return err;
         });
     }
+
+    
+    get facture(): Facture {
+        if (this._facture == null){
+          this._facture = new Facture();
+        }
+        return this._facture;
+      }
+    
+      set facture(value: Facture) {
+        this._facture = value;
+      }
+
+      get factures(): Array<Facture> {
+        if (this._Factures == null){
+          this._Factures = new Array<Facture>();
+        }
+        return this._Factures;
+      }
+    
+      set factures(value: Array<Facture>) {
+        this._Factures = value;
+      }
+      private cloneFacture(facture: Facture) {
+        const monFacture = new Facture();
+        monFacture.client=facture.client;
+        monFacture.dateFacturation=facture.dateFacturation;
+         monFacture.numFacture=facture.numFacture;
+        return monFacture;
+      }
 } 
