@@ -1,6 +1,7 @@
 import { Facture } from './facture';
 
 export class Client {
+    public id:number;
     public code: string;
     public nom: string;
     public prenom: string;

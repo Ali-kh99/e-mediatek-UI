@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Facture } from '../model/facture';
+import { LigneFactureService } from './ligne-facture.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +9,7 @@ import { Facture } from '../model/facture';
 export class FactureService {
     private _facture:Facture;
     private  _Factures:Array<Facture>;
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,private ligneFactureService:LigneFactureService) { }
 
     public saveFacture() {
         this.http.post(`http://localhost:8080/e-mediatek/facture/`, this.facture).subscribe(
@@ -27,12 +28,16 @@ export class FactureService {
     }
 
     public findAll() {
-        this.http.get<Array<Facture>>(`http://localhost:8080/e-mediatek/facture/`).subscribe(
+        this.http.get<Array<Facture>>(`http://localhost:5050/e-mediatek/facture/`).subscribe(
             data => {
                this.factures = data;
+                this.ligneFactureService.FacturesWithfindProduits(this.factures);
               },
         );
     }
+   
+
+   
 
     public findByNumeroFacture(numeroFacture: string) {
         this.http.get(`http://localhost:8080/e-mediatek/facture/numeroFacture/` + numeroFacture).subscribe(data => {
@@ -78,7 +83,7 @@ export class FactureService {
         const monFacture = new Facture();
         monFacture.client=facture.client;
         monFacture.dateFacturation=facture.dateFacturation;
-         monFacture.numFacture=facture.numFacture;
+         monFacture.numeroFacture=facture.numeroFacture;
         return monFacture;
       }
 } 

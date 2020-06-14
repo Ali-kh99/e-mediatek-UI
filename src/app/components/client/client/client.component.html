@@ -6,107 +6,76 @@
                 <div class="content-panel">
                     <h4><i class="fa fa-angle-right"></i> Clients</h4>
                     <hr>
+                    <div *ngIf="showForm">
+                        <table class="table table-striped table-advance table-hover">
+                            <thead>
+                                <tr>
+                                    <th> code</th>
+                                    <th> Nom</th>
+                                    <th> Prenom</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" [(ngModel)]="cEdit.code" name="code"> </td>
+                                    <td><input type="text" [(ngModel)]="cEdit.nom" name="nom"> </td>
+                                    <td><input type="text" [(ngModel)]="cEdit.prenom" name="prenom"> </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <table class="table table-striped table-advance table-hover">
+                            <thead>
+
+                                <tr>
+                                    <th> adresse</th>
+                                    <th> Email</th>
+                                    <th>tel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td><input type="text" [(ngModel)]="cEdit.adresse" name="adresse"> </td>
+                                    <td><input type="text" [(ngModel)]="cEdit.email" name="email"> </td>
+                                    <td><input type="text" [(ngModel)]="cEdit.tel" name="tel"> </td>
+                                    <td>
+                                        <button (click)="upDate(cEdit)" class="btn btn-primary btn-xs">edit</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
                     <table class="table table-striped table-advance table-hover">
                         <thead>
                             <tr>
+                                <th> code</th>
                                 <th> Nom</th>
                                 <th> Prenom</th>
                                 <th> adresse</th>
                                 <th> Email</th>
-                                <th>login</th>
+                                <th>tel</th>
                                 <th>Categorie</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let c of servicesav">
+                                <td>{{c.client.code}}</td>
+                                <td>{{c.client.nom}} </td>
+                                <td>{{c.client.prenom}}</td>
+                                <td>{{c.client.adresse}}</td>
+                                <td>{{c.client.email}}</td>
+                                <td>{{c.client.tel}}</td>
+                                <td>{{c.categorie.response}}</td>
                                 <td>
-                                    Elouadi </td>
-                                <td>
-                                    abdelati
-                                </td>
-                                <td>
-                                    zagora
-                                </td>
-                                <td>
-                                    Elouadi@gmail.com
-                                </td>
-                                <td>
-                                    Elouadi
-                                </td>
-                                <td>
-                                    VAP
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                    <button (click)="edit(c.client)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                    <button (click)="delete(c.client.id)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Elouadi </td>
-                                <td>
-                                    abdelati
-                                </td>
-                                <td>
-                                    zagora
-                                </td>
-                                <td>
-                                    Elouadi@gmail.com
-                                </td>
-                                <td>
-                                    Elouadi
-                                </td>
-                                <th>VAp</th>
 
-                                <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Elouadi </td>
-                                <td>
-                                    abdelati
-                                </td>
-                                <td>
-                                    zagora
-                                </td>
-                                <td>
-                                    Elouadi@gmail.com
-                                </td>
-                                <td>
-                                    Elouadi
-                                </td>
-                                <th>vap</th>
-
-                                <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Elouadi </td>
-                                <td>
-                                    abdelati
-                                </td>
-                                <td>
-                                    zagora
-                                </td>
-                                <td>
-                                    Elouadi@gmail.com
-                                </td>
-                                <td>
-                                    Elouadi
-                                </td>
-                                <th>vap</th>
-
-                                <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -125,43 +94,42 @@
                             <div class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Code (required)</label>
                                 <div class="col-lg-10">
-                                    <input class=" form-control" name="code" minlength="2" type="text" required />
+                                    <input class=" form-control" [(ngModel)]="client.code" name="code" minlength="2" type="text" required />
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Nom (required)</label>
                                 <div class="col-lg-10">
-                                    <input class=" form-control" id="cname" name="nom" minlength="2" type="text" required />
+                                    <input class=" form-control" id="cname" [(ngModel)]="client.nom" name="nom" minlength="2" type="text" required />
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Prenom (required)</label>
                                 <div class="col-lg-10">
-                                    <input class=" form-control" name="prenom" minlength="2" type="text" required />
+                                    <input class=" form-control" [(ngModel)]="client.prenom" name="prenom" minlength="2" type="text" required />
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Adresse (required)</label>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control " id="ccomment" name="adresse" required=""></textarea>
+                                    <textarea class="form-control " id="ccomment" [(ngModel)]="client.adresse" name="adresse" required=""></textarea>
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Tel (required)</label>
                                 <div class="col-lg-10">
-                                    <input class=" form-control" name="tel" minlength="2" type="text" required />
+                                    <input class=" form-control" [(ngModel)]="client.tel" name="tel" minlength="2" type="text" required />
                                 </div>
                             </div>
                             <div class="form-group ">
                                 <label for="cemail" class="control-label col-lg-2">E-Mail (required)</label>
                                 <div class="col-lg-10">
-                                    <input class="form-control " id="cemail" type="email" name="email" required />
+                                    <input class="form-control " id="cemail" type="email" [(ngModel)]="client.email" name="email" required />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    <button class="btn btn-theme" type="submit">Enregister</button>
-                                    <button class="btn btn-theme04" type="button">Annuler</button>
+                                    <button class="btn btn-theme" (click)="save()" type="submit">Enregister</button>
                                 </div>
                             </div>
                         </form>
