@@ -46,6 +46,7 @@ export class ProduitService {
       .delete(`http://localhost:5050/e-mediatek/produit/id/` + id)
       .subscribe(() => {
         this.produits = this.produits.filter((produit) => produit.id != id);
+        this.inventaireProduitsVendus=this.inventaireProduitsVendus.filter((inv) => inv.produit.id!=id);
       });
   }
 
@@ -107,6 +108,7 @@ export class ProduitService {
       );
   }
   public invProduitsVendus() {
+    this.inventaireProduitsVendus.length=0;
     for (let i = 0; i < this.produits.length; i++) {
       this.invProduitVendu(this.produits[i].codeBarre, this.produits[i]);
     }

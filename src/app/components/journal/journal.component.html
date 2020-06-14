@@ -1,0 +1,37 @@
+<section id="main-content">
+    <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Journalisation</h3>
+        <div class="row mt">
+            <div class="col-lg-12">
+                <div class="content-panel">
+                    <section id="unseen">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Code Produit</th>
+                                    <th>date alert</th>
+                                    <th class="numeric">stock</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let j of journalisations">
+                                    <td>{{j.produit.codeBarre}}</td>
+                                    <td>{{j.datealert}}</td>
+                                    <td class="numeric">{{j.stock}} </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <!-- /content-panel -->
+            </div>
+            <!-- /col-lg-4 -->
+        </div>
+        <!-- /row -->
+
+    </section>
+    <!-- /wrapper -->
+
+</section>

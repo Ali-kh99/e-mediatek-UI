@@ -18,6 +18,7 @@ import { ClientComponent } from './components/client/client/client.component';
 import { HomeComponent } from './components/home/home.component';
 import { FactureComponent } from './components/facture/facture.component';
 import { ProduitComponent } from './components/produit/produit.component';
+import { JournalComponent } from './components/journal/journal.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProduitComponent } from './components/produit/produit.component';
     HomeComponent,
     FactureComponent,
     ProduitComponent,
+    JournalComponent,
 
   ],
   imports: [
