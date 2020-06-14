@@ -66,6 +66,7 @@ export class ClientService {
   }
 
   public serviceSav(){
+    this.servicesav.length=0;
     for(let i=0;i<this.clients.length;i++){
       this.sav(this.clients[i].code,this.clients[i]);
     }

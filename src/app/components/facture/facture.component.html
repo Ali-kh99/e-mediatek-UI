@@ -68,9 +68,13 @@
 </section>
 
 <!--affich facture start-->
-<section id="main-content">
+
+<section id="main-content" #htmlData>
     <section class="wrapper">
         <h3><i class="fa fa-angle-right"></i> Factures</h3>
+        <div class="col-md-4 text-right">
+            <button class="btn btn-danger btn-block btn-lg" (click)="downloadPDF()">Download PDF</button><br>
+        </div>
         <div class="row mt" *ngFor="let f of  factures">
             <div class="col-lg-12">
                 <div class="content-panel">
@@ -109,5 +113,6 @@
     <!-- /wrapper -->
 
 </section>
+
 <!-- /MAIN CONTENT -->
 <!--main content end-->
