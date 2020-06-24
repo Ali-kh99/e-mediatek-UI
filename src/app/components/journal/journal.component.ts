@@ -18,5 +18,4 @@ ngOnInit() {
 get journalisations():Array<Journalisation>{
   return this.journalisationService.journalisations;
 }
-
 }

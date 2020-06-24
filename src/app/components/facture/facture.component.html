@@ -5,23 +5,21 @@
             <div class="col-lg-12">
 
                 <div class="form-panel">
+                    <div class="alert alert-warning" role="alert">
+                        <strong *ngFor="let alert of alerts"> qtestock de  {{alert.produit.codeBarre }} est{{alert.produit.stock}} </strong>
+                    </div>
                     <h4>
                         <i class="fa fa-angle-right"></i> Crée une Facture</h4>
                     <hr>
                     <div class=" form">
-                        <form class="cmxform form-horizontal style-form" (ngSubmit)="save()" id="commentForm" method="get" action="">
-                            <!--
-                            <h4>Le Client</h4>
-                            <select class="form-control">
-                                <option value="clt.code" *ngFor="let clt of clients">
-                                </option>
-                            </select>
-                                -->
+                        <form class="cmxform form-horizontal style-form" (ngSubmit)="save(prods,clt)" id="commentForm" method="get" action="">
                             <mat-form-field>
                                 <mat-label>Client</mat-label>
-                                <mat-select>
-                                    <mat-option>None</mat-option>
-                                    <mat-option [(value)]="clt" *ngFor="let clt of clients" [value]="clt?.code">{{ clt?.code + ' (' + clt?.nom + ' ' + clt?.prenom +')' }}
+                                <mat-select [(value)]="clt">
+                                    <mat-option>
+                                        <ngx-mat-select-search [(ngModel)]="searchC" name="searchC" (keyup)="searchClient()"></ngx-mat-select-search>
+                                    </mat-option>
+                                    <mat-option *ngFor="let clt of resultClients" [value]="clt">{{ clt?.code + ' (' + clt?.nom + ' ' + clt?.prenom +')' }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -32,7 +30,10 @@
                             <mat-form-field>
                                 <mat-label>Produits</mat-label>
                                 <mat-select [(value)]="prods" multiple>
-                                    <mat-option *ngFor="let prod of produits; let i = index" [value]="prod?.designation">{{ prod?.designation }}</mat-option>
+                                    <mat-option>
+                                        <ngx-mat-select-search [(ngModel)]="searchP" name="searchP" (keyup)="searchProduit()"></ngx-mat-select-search>
+                                    </mat-option>
+                                    <mat-option *ngFor="let prod of resultProduits; let i = index" [value]="prod">{{ prod?.designation }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -41,8 +42,8 @@
                             <div *ngFor="let pro of prods " class="form-group ">
                                 <label for="cname" class="control-label col-lg-2">Quantité achetée (required)</label>
                                 <div class="col-lg-10">
-                                    <label> {{pro}} </label>
-                                    <input [(ngModel)]="produit.prix" class=" form-control" name="prix" minlength="2" type="text" required/>
+                                    <label> {{pro.designation}} </label>
+                                    <input class=" form-control" id="{{pro.codeBarre}}" minlength="2" type="text" required/>
                                 </div>
                             </div>
 

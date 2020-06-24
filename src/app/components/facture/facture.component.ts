@@ -16,6 +16,8 @@ import * as jspdf from 'jspdf';
 })
 export class FactureComponent implements OnInit {
   @ViewChild('htmlData', {static:false}) htmlData:ElementRef;
+   searchC ='';
+   searchP='';
   constructor(private produitService:ProduitService,private clientService:ClientService,private factureService:FactureService,private ligneFactureService:LigneFactureService) { }
    ligneFactures =new Array<LigneFacture>();
   ngOnInit() {
@@ -23,13 +25,31 @@ export class FactureComponent implements OnInit {
     this.clientService.findAll();
     this.produitService.findAll();
   }
-  public openPDF():void {
-    let DATA = this.htmlData.nativeElement;
-    let doc = new jspdf('p','pt', 'a4');
-    doc.fromHTML(DATA.innerHTML,15,15);
-    doc.output('factures.pdf');
-  }
 
+  public save(produits,client){
+      const facture=new Facture();
+      const ligneFactures = new Array<LigneFacture>();
+    for(let i=0;i<produits.length;i++){
+        let  qte= (<HTMLInputElement>document.getElementById(produits[i].codeBarre)).value;
+        const ligneFacture = new LigneFacture();
+        ligneFacture.produit=produits[i];
+        ligneFacture.qteAchetee=Number(qte);
+        ligneFactures.push(ligneFacture);
+    }
+    facture.ligneFactures=ligneFactures;
+    facture.client=client;
+    this.facture=facture;
+    this.factureService.save();
+
+ }
+  public searchClient(){
+     this.resultClients = this.clients
+     .filter((client)=>client.code.toLowerCase().includes(this.searchC.toLowerCase()));
+  }
+  public searchProduit(){
+     this.resultProduits = this.produits
+    .filter((produit)=>produit.designation.toLowerCase().includes(this.searchP.toLowerCase()))
+  }
 
   public downloadPDF():void {
     let DATA = this.htmlData.nativeElement;
@@ -53,11 +73,23 @@ export class FactureComponent implements OnInit {
   get produits ():Array<Produit>{
     return this.produitService.produits;
   }
+  get resultProduits ():Array<Produit>{
+    return this.produitService.copierProduits;
+  }
+  set resultProduits(val:Array<Produit>){
+    this.produitService.copierProduits=val;
+  }
   get client():Client{
-    return this.clientService,this.client;
+    return this.clientService.client;
   }
   get clients():Array<Client> {
     return this.clientService.clients;
+  }
+  get resultClients():Array<Client> {
+    return this.clientService.copierClients;
+  }
+  set resultClients(val:Array<Client>){
+       this.clientService.copierClients=val;
   }
   get factures():Array<Facture> {
     return this.ligneFactureService.factures;
@@ -65,4 +97,11 @@ export class FactureComponent implements OnInit {
   get facture():Facture {
     return this.factureService.facture;
   }
+  set facture(facture:Facture) {
+     this.factureService.facture=facture;
+  }
+  get alerts():Array<LigneFacture>{
+    return this.factureService.alerts;
+  }
+
 }

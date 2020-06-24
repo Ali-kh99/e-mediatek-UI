@@ -12,12 +12,10 @@
                                 <th> désignation</th>
                                 <th> prix actuel</th>
                                 <th> demande</th>
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let i of inventaireProduitsVendus">
+                            <tr *ngFor="let i of resultInventaireProduitsVendus">
                                 <td>{{i.produit.designation}}</td>
                                 <td>{{i.produit.prix}}</td>
                                 <td> {{i.demande.response}}</td>
@@ -35,6 +33,8 @@
                 <div class="content-panel">
                     <h4><i class="fa fa-angle-right"></i> Produits</h4>
                     <hr>
+                    <input type="text" placeholder="search..." class="form-control input-lg" [(ngModel)]="searchP" name="searchP" (keyup)="searchProduit()">
+
                     <table class="table table-striped table-advance table-hover" *ngIf="showForm">
                         <thead>
                             <tr>
@@ -69,7 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let p of produits ">
+                            <tr *ngFor="let p of resultProduits ">
                                 <td>{{p.codeBarre}} </td>
                                 <td>{{p.designation}}</td>
                                 <td>{{p.prix}}</td>

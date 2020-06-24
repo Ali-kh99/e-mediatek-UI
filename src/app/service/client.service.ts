@@ -10,7 +10,9 @@ import { StringResponse } from '../model/StringResponse';
 export class ClientService {
   private _client: Client;
   private _clients: Array<Client>;
+  private _copierClients: Array<Client>;
   private _serviceSav:Array<ServiceSav>;
+  private _copierServiceSav:Array<ServiceSav>;
   constructor(private http: HttpClient) {}
 
   public save() {
@@ -51,6 +53,7 @@ export class ClientService {
       .get<Array<Client>>(`http://localhost:5050/e-mediatek/client/`)
       .subscribe((data) => {
         this.clients = data;
+       this.copierClients=data;
         this.serviceSav();
       });
   }
@@ -62,11 +65,13 @@ export class ClientService {
         sav.client = client;
         sav.categorie = data;
         this.servicesav.push(sav);
+        this.copierServicesav.push(sav);
       });
   }
 
   public serviceSav(){
     this.servicesav.length=0;
+    this.copierServicesav.length=0;
     for(let i=0;i<this.clients.length;i++){
       this.sav(this.clients[i].code,this.clients[i]);
     }
@@ -126,7 +131,7 @@ export class ClientService {
         }
       );
   }
-
+   
   get client(): Client {
     if (this._client == null) {
       this._client = new Client();
@@ -148,6 +153,18 @@ export class ClientService {
   set clients(value: Array<Client>) {
     this._clients = value;
   }
+  
+
+  get copierClients(): Array<Client> {
+    if (this._copierClients == null) {
+      this._copierClients = new Array<Client>();
+    }
+    return this._copierClients;
+  }
+
+  set copierClients(value: Array<Client>) {
+    this._copierClients = value;
+  }
   private cloneClient(client: Client) {
     const monClient = new Client();
     monClient.adresse = client.adresse;
@@ -167,5 +184,15 @@ export class ClientService {
 
   set servicesav(value: Array<ServiceSav>) {
     this._serviceSav = value;
+  }
+  get copierServicesav(): Array<ServiceSav> {
+    if (this._copierServiceSav == null) {
+      this._copierServiceSav = new Array<ServiceSav>();
+    }
+    return this._copierServiceSav;
+  }
+
+  set copierServicesav(value: Array<ServiceSav>) {
+    this._copierServiceSav = value;
   }
 }

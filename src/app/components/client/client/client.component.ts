@@ -10,11 +10,17 @@ import { ServiceSav } from 'src/app/model/serviceSav';
 })
 export class ClientComponent implements OnInit {
   showForm=false;
+  searchC ='';
   cEdit =new Client();
   constructor(private clientService:ClientService) { }
 
   ngOnInit() {
     this.clientService.findAll();
+  }
+  
+  public searchClient(){
+     this.resultServicesav = this.servicesav
+     .filter((servicesav)=>servicesav.client.code.toLowerCase().includes(this.searchC.toLowerCase()));
   }
     
   public edit(client:Client){
@@ -40,5 +46,11 @@ export class ClientComponent implements OnInit {
   }
   get servicesav(): Array<ServiceSav> {
     return this.clientService.servicesav;
+  }
+  get resultServicesav():Array<ServiceSav> {
+    return this.clientService.copierServicesav;
+  }
+  set resultServicesav(val:Array<ServiceSav>){
+       this.clientService.copierServicesav=val;
   }
 }

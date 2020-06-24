@@ -11,11 +11,19 @@ import { InventaireProduitsVendus } from 'src/app/model/invProduits';
 export class ProduitComponent implements OnInit {
     showForm=false;
     pEdit =new Produit();
+    searchP ='';
   constructor(private produitService:ProduitService) { }
 
   ngOnInit() {
      this.produitService.findAll();
   }
+  public searchProduit(){
+    this.resultProduits = this.produits
+    .filter((produit)=>produit.codeBarre.toLowerCase().includes(this.searchP.toLowerCase()));
+    this.resultInventaireProduitsVendus = this.inventaireProduitsVendus
+    .filter((inv)=>inv.produit.codeBarre.toLowerCase().includes(this.searchP.toLowerCase()));
+ }
+   
   
   public edit(produit:Produit){
     console.log(produit);
@@ -44,5 +52,17 @@ export class ProduitComponent implements OnInit {
 
   get inventaireProduitsVendus(): Array<InventaireProduitsVendus> {
       return this.produitService.inventaireProduitsVendus;
+  }
+  get resultInventaireProduitsVendus(): Array<InventaireProduitsVendus> {
+    return this.produitService.copierInventaireProduitsVendus;
+   }
+   set resultInventaireProduitsVendus(val:Array<InventaireProduitsVendus>){
+    this.produitService.copierInventaireProduitsVendus=val;
+}
+  get resultProduits():Array<Produit> {
+    return this.produitService.copierProduits;
+  }
+  set resultProduits(val:Array<Produit>){
+       this.produitService.copierProduits=val;
   }
 }

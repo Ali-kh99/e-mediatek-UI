@@ -12,7 +12,9 @@ import { FactureService } from './facture.service';
 export class ProduitService {
   private _produit: Produit;
   private _produits: Array<Produit>;
+  private _copierProduits: Array<Produit>;
   private _inventaireProduitsVendus: Array<InventaireProduitsVendus>;
+  private _copierInventaireProduitsVendus: Array<InventaireProduitsVendus>;
   private _demande: StringResponse;
   constructor(private http: HttpClient) {}
 
@@ -55,6 +57,7 @@ export class ProduitService {
       .get<Array<Produit>>(`http://localhost:5050/e-mediatek/produit/`)
       .subscribe((data) => {
         this.produits = data;
+        this.copierProduits=data;
         this.invProduitsVendus();
       });
   }
@@ -101,6 +104,7 @@ export class ProduitService {
           invPsVs.produit = produit;
           invPsVs.demande = data;
           this.inventaireProduitsVendus.push(invPsVs);
+          this.copierInventaireProduitsVendus.push(invPsVs);
         },
         (error) => {
           console.log(error);
@@ -109,6 +113,7 @@ export class ProduitService {
   }
   public invProduitsVendus() {
     this.inventaireProduitsVendus.length=0;
+    this.copierInventaireProduitsVendus.length=0;
     for (let i = 0; i < this.produits.length; i++) {
       this.invProduitVendu(this.produits[i].codeBarre, this.produits[i]);
     }
@@ -146,6 +151,17 @@ export class ProduitService {
   set produits(value: Array<Produit>) {
     this._produits = value;
   }
+  get copierProduits(): Array<Produit> {
+    if (this._copierProduits == null) {
+      this._copierProduits = new Array<Produit>();
+    }
+    return this._copierProduits;
+  }
+
+  set copierProduits(value: Array<Produit>) {
+    this._copierProduits = value;
+  }
+
 
   private cloneProduit(produit: Produit) {
     const monProduit = new Produit();
@@ -164,6 +180,16 @@ export class ProduitService {
 
   set inventaireProduitsVendus(value: Array<InventaireProduitsVendus>) {
     this._inventaireProduitsVendus = value;
+  }
+  get copierInventaireProduitsVendus(): Array<InventaireProduitsVendus> {
+    if (this._copierInventaireProduitsVendus == null) {
+      this._copierInventaireProduitsVendus = new Array<InventaireProduitsVendus>();
+    }
+    return this._copierInventaireProduitsVendus;
+  }
+
+  set copierInventaireProduitsVendus(value: Array<InventaireProduitsVendus>) {
+    this._copierInventaireProduitsVendus = value;
   }
  
 }

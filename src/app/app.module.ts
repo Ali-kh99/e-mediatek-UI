@@ -20,6 +20,9 @@ import { FactureComponent } from './components/facture/facture.component';
 import { ProduitComponent } from './components/produit/produit.component';
 import { JournalComponent } from './components/journal/journal.component';
 
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatFormFieldModule } from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,9 @@ import { JournalComponent } from './components/journal/journal.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgxMatSelectSearchModule,
+    MatFormFieldModule
 
   ],
   providers: [ClientService, ProduitService, FactureService],

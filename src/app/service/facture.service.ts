@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Facture } from '../model/facture';
 import { LigneFactureService } from './ligne-facture.service';
+import { LigneFacture } from '../model/ligne-facture';
 
 @Injectable({
     providedIn: 'root'
@@ -9,15 +10,20 @@ import { LigneFactureService } from './ligne-facture.service';
 export class FactureService {
     private _facture:Facture;
     private  _Factures:Array<Facture>;
+    private _alerts:Array<LigneFacture>;
     constructor(private http: HttpClient,private ligneFactureService:LigneFactureService) { }
 
-    public saveFacture() {
-        this.http.post(`http://localhost:8080/e-mediatek/facture/`, this.facture).subscribe(
+    public save() {
+        this.http.post<Facture>(`http://localhost:5050/e-mediatek/facture/`, this.facture).subscribe(
             data => {
-                if (data > 0) {
-                  this.factures.push(this.cloneFacture(this.facture));
-                  this.facture = null;
-                }
+              this.facture.dateFacturation=data.dateFacturation;
+              this.facture.numeroFacture=data.numeroFacture;
+              this.fs.push(this.facture);
+              this.facture = null;
+               if( data.ligneFactures!=null){
+                 this.alerts=data.ligneFactures;
+               }
+                
               }, eror => {
                 console.log('eror');
               });
@@ -30,7 +36,7 @@ export class FactureService {
     public findAll() {
         this.http.get<Array<Facture>>(`http://localhost:5050/e-mediatek/facture/`).subscribe(
             data => {
-               this.factures = data;
+                this.factures = data;
                 this.ligneFactureService.FacturesWithfindProduits(this.factures);
               },
         );
@@ -76,8 +82,27 @@ export class FactureService {
         return this._Factures;
       }
     
+      set alerts(value: Array<LigneFacture>) {
+        this._alerts = value;
+      }
+
+      get alerts(): Array<LigneFacture> {
+        if (this._alerts == null){
+          this._alerts = new Array<LigneFacture>();
+        }
+        return this._alerts;
+      }
+    
       set factures(value: Array<Facture>) {
         this._Factures = value;
+      }
+
+      get fs(): Array<Facture> {
+        return this.ligneFactureService.factures;
+      }
+    
+      set fs(value: Array<Facture>) {
+        this.ligneFactureService.factures=value;
       }
       private cloneFacture(facture: Facture) {
         const monFacture = new Facture();

@@ -6,6 +6,7 @@
                 <div class="content-panel">
                     <h4><i class="fa fa-angle-right"></i> Clients</h4>
                     <hr>
+                    <input type="text" placeholder="search..." class="form-control input-lg" [(ngModel)]="searchC" name="searchC" (keyup)="searchClient()">
                     <div *ngIf="showForm">
                         <table class="table table-striped table-advance table-hover">
                             <thead>
@@ -62,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let c of servicesav">
+                            <tr *ngFor="let c of resultServicesav">
                                 <td>{{c.client.code}}</td>
                                 <td>{{c.client.nom}} </td>
                                 <td>{{c.client.prenom}}</td>
