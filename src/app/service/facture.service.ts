@@ -16,14 +16,20 @@ export class FactureService {
     public save() {
         this.http.post<Facture>(`http://localhost:5050/e-mediatek/facture/`, this.facture).subscribe(
             data => {
-              this.facture.dateFacturation=data.dateFacturation;
-              this.facture.numeroFacture=data.numeroFacture;
-              this.fs.push(this.facture);
-              this.facture = null;
+              if(data==null){
+                   
+              }else{
+                console.log(data);
+               this.facture.dateFacturation=data.dateFacturation;
+               this.facture.numeroFacture=data.numeroFacture;
+               this.fs.push(this.facture);
+               this.facture = null;
                if( data.ligneFactures!=null){
                  this.alerts=data.ligneFactures;
                }
                 
+              }
+              
               }, eror => {
                 console.log('eror');
               });
