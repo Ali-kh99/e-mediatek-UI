@@ -11,25 +11,30 @@ export class FactureService {
     private _facture:Facture;
     private  _Factures:Array<Facture>;
     private _alerts:Array<LigneFacture>;
+    private _errorStock:Array<LigneFacture>;
     constructor(private http: HttpClient,private ligneFactureService:LigneFactureService) { }
 
     public save() {
         this.http.post<Facture>(`http://localhost:5050/e-mediatek/facture/`, this.facture).subscribe(
             data => {
               if(data==null){
-                   
+                for(let i=0;i<this.facture.ligneFactures.length;i++){
+                  if((this.facture.ligneFactures[i].produit.qteStock-this.facture.ligneFactures[i].qteAchetee)<0){
+                    this.errorStock.push(this.facture.ligneFactures[i]);
+                  }
+                }
               }else{
-                console.log(data);
                this.facture.dateFacturation=data.dateFacturation;
                this.facture.numeroFacture=data.numeroFacture;
                this.fs.push(this.facture);
-               this.facture = null;
-               if( data.ligneFactures!=null){
-                 this.alerts=data.ligneFactures;
-               }
-                
+                for(let i=0;i<this.facture.ligneFactures.length;i++){
+                  if((this.facture.ligneFactures[i].produit.qteStock-this.facture.ligneFactures[i].qteAchetee)<=5){
+                    this.facture.ligneFactures[i].produit.qteStock=this.facture.ligneFactures[i].produit.qteStock-this.facture.ligneFactures[i].qteAchetee;
+                    this.alerts.push(this.facture.ligneFactures[i]);
+                  }
+                }
+                this.facture = null;
               }
-              
               }, eror => {
                 console.log('eror');
               });
@@ -98,6 +103,17 @@ export class FactureService {
         }
         return this._alerts;
       }
+
+      set errorStock(value: Array<LigneFacture>) {
+        this._errorStock = value;
+      }
+      get errorStock(): Array<LigneFacture> {
+        if (this._errorStock == null){
+          this._errorStock = new Array<LigneFacture>();
+        }
+        return this._errorStock;
+      }
+      
     
       set factures(value: Array<Facture>) {
         this._Factures = value;

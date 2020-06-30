@@ -8,6 +8,7 @@ import { ProduitService } from 'src/app/service/produit.service';
 import { Produit } from 'src/app/model/produit';
 import { LigneFacture } from 'src/app/model/ligne-facture';
 import * as jspdf from 'jspdf';
+import { FormBuilder,FormGroup,FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-facture',
@@ -18,15 +19,24 @@ export class FactureComponent implements OnInit {
   @ViewChild('htmlData', {static:false}) htmlData:ElementRef;
    searchC ='';
    searchP='';
-  constructor(private produitService:ProduitService,private clientService:ClientService,private factureService:FactureService,private ligneFactureService:LigneFactureService) { }
+  constructor(private formBuilder: FormBuilder,private produitService:ProduitService,private clientService:ClientService,private factureService:FactureService,private ligneFactureService:LigneFactureService) { }
    ligneFactures =new Array<LigneFacture>();
   ngOnInit() {
     this.factureService.findAll();
     this.clientService.findAll();
     this.produitService.findAll();
   }
-
-  public save(produits,client){
+  
+   myGroup = new FormGroup({
+    client: new FormControl(),
+    prods: new FormControl(),
+    searchC: new FormControl() ,
+    searchP: new FormControl()
+    });
+  resetForm() {
+    this.myGroup.reset();
+  }
+  public save(produits ,client ){
       const facture=new Facture();
       const ligneFactures = new Array<LigneFacture>();
     for(let i=0;i<produits.length;i++){
@@ -40,6 +50,9 @@ export class FactureComponent implements OnInit {
     facture.client=client;
     this.facture=facture;
     this.factureService.save();
+    this.resetForm();
+    produits.length=0;
+
 
  }
   public searchClient(){
@@ -102,6 +115,22 @@ export class FactureComponent implements OnInit {
   }
   get alerts():Array<LigneFacture>{
     return this.factureService.alerts;
+  }
+
+   get errorStock():Array<LigneFacture>{
+    return this.factureService.errorStock;
+  }
+  get cl() {
+    return this.myGroup.get('client');
+  }
+  get pds() {
+    return this.myGroup.get('prods');
+  }
+  get sC() {
+    return this.myGroup.get('searchC');
+  }
+  get sP() {
+    return this.myGroup.get('searchP');
   }
 
 }

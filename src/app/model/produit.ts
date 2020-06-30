@@ -6,6 +6,6 @@ export class Produit {
     public codeBarre: string;
     public prix: string;
     public designation: string;
-    public qteStock: string;
+    public qteStock: number;
     constructor() { }
 }

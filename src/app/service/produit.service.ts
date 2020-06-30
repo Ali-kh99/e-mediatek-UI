@@ -26,6 +26,7 @@ export class ProduitService {
           if (data != null) {
             this.produit = this.cloneProduit(data);
             this.produits.push(this.produit);
+            this.copierProduits=this.produits;
             this.invProduitVendu(this.produit.codeBarre, this.produit);
             this.produit = null;
           }
@@ -47,8 +48,11 @@ export class ProduitService {
     this.http
       .delete(`http://localhost:5050/e-mediatek/produit/id/` + id)
       .subscribe(() => {
+        
         this.produits = this.produits.filter((produit) => produit.id != id);
         this.inventaireProduitsVendus=this.inventaireProduitsVendus.filter((inv) => inv.produit.id!=id);
+        this.copierProduits = this.copierProduits.filter((produit) => produit.id != id);
+        this.copierInventaireProduitsVendus=this.copierInventaireProduitsVendus.filter((inv) => inv.produit.id!=id);
       });
   }
 
@@ -165,6 +169,7 @@ export class ProduitService {
 
   private cloneProduit(produit: Produit) {
     const monProduit = new Produit();
+    monProduit.id=produit.id;
     monProduit.codeBarre = produit.codeBarre;
     monProduit.designation = produit.designation;
     monProduit.prix = produit.prix;

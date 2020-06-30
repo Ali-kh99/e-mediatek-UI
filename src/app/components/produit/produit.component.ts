@@ -26,10 +26,7 @@ export class ProduitComponent implements OnInit {
    
   
   public edit(produit:Produit){
-    console.log(produit);
     this.pEdit=produit;
-    console.log(this.pEdit);
-
     this.showForm=true;
   }
   public upDate(produit:Produit){

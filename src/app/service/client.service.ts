@@ -23,12 +23,13 @@ export class ClientService {
           if (data != null) {
             this.client=this.cloneClient(this.client);
             this.clients.push(this.client);
+            this.copierClients= this.clients;
             this.sav(this.client.code,this.client);
             this.client = null;
           }
         },
         (eror) => {
-          console.log("eror");
+          console.log(eror);
         }
       );
   }
@@ -44,6 +45,10 @@ export class ClientService {
   public delete(id: number) {
     this.http.delete(`http://localhost:5050/e-mediatek/client/id/` + id).subscribe(()=>{
       this.clients = this.clients.filter((client) => client.id != id);
+      this.copierClients = this.copierClients.filter((client) => client.id != id);
+      this.copierServicesav= this.copierServicesav.filter((sav) => sav.client.id != id); 
+      this.servicesav= this.copierServicesav; 
+
     }
     );
   }
@@ -167,6 +172,7 @@ export class ClientService {
   }
   private cloneClient(client: Client) {
     const monClient = new Client();
+    monClient.id=client.id;
     monClient.adresse = client.adresse;
     monClient.code = client.code;
     monClient.email = client.email;

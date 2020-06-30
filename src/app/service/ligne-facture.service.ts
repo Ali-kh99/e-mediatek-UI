@@ -25,7 +25,6 @@ export class LigneFactureService {
   public FacturesWithfindProduits(factures: Array<Facture>) {
       this.factures.length=0;
     for (let i = 0; i < factures.length; i++) {
-      console.log(factures[i].client.code);
       this.findProduitsByFacture(factures[i]);
     }
   }

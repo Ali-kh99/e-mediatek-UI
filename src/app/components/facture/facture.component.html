@@ -5,33 +5,33 @@
             <div class="col-lg-12">
 
                 <div class="form-panel">
+                    <div class="alert alert-danger" role="alert" *ngIf="errorStock?.length">
+                        <strong *ngFor="let error of errorStock"> la qte demande de produit {{error.produit.codeBarre }} est    {{error.qteAchetee }} mais la qte en stock est {{error.produit.qteStock}} </strong>
+                    </div>
                     <div class="alert alert-warning" role="alert" *ngIf="alerts?.length">
-                        <strong *ngFor="let alert of alerts"> qtestock de  {{alert.produit.codeBarre }} est{{alert.produit.stock}} </strong>
+                        <strong *ngFor="let alert of alerts">  la qte en stock  de  {{alert.produit.codeBarre }} est{{alert.produit.qteStock}} </strong>
                     </div>
                     <h4>
                         <i class="fa fa-angle-right"></i> Crée une Facture</h4>
                     <hr>
                     <div class=" form">
-                        <form class="cmxform form-horizontal style-form" (ngSubmit)="save(prods,clt)" id="commentForm" method="get" action="">
+                        <form class="cmxform form-horizontal style-form" (ngSubmit)="save(prods,clt)" [formGroup]="myGroup">
                             <mat-form-field>
                                 <mat-label>Client</mat-label>
-                                <mat-select [(value)]="clt">
+                                <mat-select [(value)]="clt" formControlName="client">
                                     <mat-option>
-                                        <ngx-mat-select-search [(ngModel)]="searchC" name="searchC" (keyup)="searchClient()"></ngx-mat-select-search>
+                                        <ngx-mat-select-search [(ngModel)]="searchC" formControlName="searchC" name="searchC" (keyup)="searchClient()"></ngx-mat-select-search>
                                     </mat-option>
                                     <mat-option *ngFor="let clt of resultClients" [value]="clt">{{ clt?.code + ' (' + clt?.nom + ' ' + clt?.prenom +')' }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-
-
-
                             <h4>Les produits</h4>
                             <mat-form-field>
                                 <mat-label>Produits</mat-label>
-                                <mat-select [(value)]="prods" multiple>
+                                <mat-select [(value)]="prods" multiple formControlName="prods">
                                     <mat-option>
-                                        <ngx-mat-select-search [(ngModel)]="searchP" name="searchP" (keyup)="searchProduit()"></ngx-mat-select-search>
+                                        <ngx-mat-select-search [(ngModel)]="searchP" name="searchP" formControlName="searchP" (keyup)="searchProduit()"></ngx-mat-select-search>
                                     </mat-option>
                                     <mat-option *ngFor="let prod of resultProduits; let i = index" [value]="prod">{{ prod?.designation }}</mat-option>
                                 </mat-select>
